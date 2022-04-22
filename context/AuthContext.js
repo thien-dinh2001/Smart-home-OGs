@@ -1,8 +1,9 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
-import React, { createContext, useContext } from 'react';
-import { auth, db } from "../firebase/config";
-
+import { doc, serverTimestamp, setDoc, collection } from "firebase/firestore";
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import db, {app} from "../firebase/config";
+import { getAuth } from "firebase/auth";
+import { useNavigation } from '@react-navigation/native';
 
 const AuthContext = createContext();
 
@@ -13,11 +14,13 @@ export function useAuth()
 
 export default function AuthProvider({ children })
 {
-    const usersRef = collection(db, 'users')
+    const auth = getAuth(app);
+    const usersRef = collection(db, 'Users');
     const [userDoc, setUserDoc] = useState()
     const [currentUser,setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
+    const navigation = useNavigation();
 
     async function loginwithPassword(email, password)
     {
@@ -25,6 +28,8 @@ export default function AuthProvider({ children })
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
+            navigation.navigate('Home Screen', {screen: 'HomeScreen'});
+            console.log('Log in successfully');
         })
         .catch((error) => {
             const errorCode = error.code;
