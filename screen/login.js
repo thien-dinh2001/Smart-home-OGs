@@ -37,26 +37,36 @@ const LoginScreen = ({navigation}) => {
   }
   return (
     <View style={styles.screenContainer}>
+      <TextInput 
+        style={{padding: 12, paddingVertical: 10, paddingHorizontal: 12, backgroundColor: 'white', borderRadius: 7, margin: 10}}
+        placeholder='Email'
+        onChangeText={ text => setEmail(text)}
+        keyboardType='email-address'>
+      </TextInput>
+      <View style={styles.passwordContainter}>
         <TextInput 
-          style={{padding: 12, paddingVertical: 10, paddingHorizontal: 12, backgroundColor: 'white', borderRadius: 7, margin: 10}}
-          placeholder='Email'
-          onChangeText={ text => setEmail(text)}
-          keyboardType='email-address'>
+          style={{}}
+          placeholder='Password'
+          secureTextEntry={secure}
+          onChangeText={ text => setPassword(text) }>
         </TextInput>
-        <View style={styles.passwordContainter}>
-          <TextInput 
-            style={{}}
-            placeholder='Password'
-            secureTextEntry={secure}
-            onChangeText={ text => setPassword(text) }>
-          </TextInput>
-          <Ionicons
-            onPress={() => setSecure(!secure)}
-            name={secure ? 'eye-off-outline' : 'eye-outline'} 
-            size={20}
-            style={{alignSelf: 'center'}}
-          />
-        </View>
+        <Ionicons
+          onPress={() => setSecure(!secure)}
+          name={secure ? 'eye-off-outline' : 'eye-outline'} 
+          size={20}
+          style={{alignSelf: 'center'}}
+        />
+      </View>
+      <View flexDirection='row'>
+        <Text style={{marginLeft: 15}}>
+            Not have an acocunt yet? 
+        </Text>
+        <Text 
+          onPress={() => {setError(); navigation.navigate('Signup Screen')}} 
+          style={{color: 'white', fontWeight: 'bold', marginLeft: 5}}> 
+          Sign up
+        </Text>
+      </View>
       <AppButton 
         icon="sign-in" 
         title="Login with Password" 

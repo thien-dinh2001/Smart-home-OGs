@@ -14,7 +14,7 @@ export function useAuth()
 
 export default function AuthProvider({ children })
 {
-    const auth = getAuth(app);
+    const auth = getAuth();
     const usersRef = collection(db, 'Users');
     const [userDoc, setUserDoc] = useState()
     const [currentUser,setCurrentUser] = useState(null);
@@ -75,14 +75,15 @@ export default function AuthProvider({ children })
                     createdAt: serverTimestamp(),
                 })
             }
+            createProfile();
+            navigation.navigate('Home Screen', {screen: 'HomeScreen'});
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorMessage);
         });
-
-
+        
     }
 
     async function signout()
