@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Image, Switch, Dimensions } from 'react-native';
 import init from 'react_native_mqtt';
 import {AsyncStorage} from '@react-native-async-storage/async-storage';
-
+import AlarmScreen from './alarm';
 
 init({
   size: 10000,
@@ -15,15 +15,12 @@ init({
 
 
 
-export default function LightScreen () { 
+export default function LightScreen ({navigation}) { 
+  const [isEnabled, setIsEnabled] = useState(false);  
   const OnOffSwitch = () =>
   {
-    const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => {
       setIsEnabled(previousState => !previousState);
-      changeMess(isEnabled.toString());
-      onConnect();
-      //sendMessage({isEnabled}, 'thienkun/feeds/onoff');
     }
     return (
       <View style={styles.container}>
@@ -31,15 +28,17 @@ export default function LightScreen () {
           trackColor={{ false: "#767577", true: "green" }}
           thumbColor={isEnabled ? "f4f3f4" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}  
+          onValueChange={() => {toggleSwitch() ; onConnect(!isEnabled)}}  
+          //onValueChange={toggleSwitch}
           value={isEnabled}
         />
       </View>
     );
   };  
   //MQTT
-  const topic = 'thienkun/feeds/test';
-  //'tentoila24/feeds/temp';
+  const feeds = ['thienkun/feeds/onoff', 'thienkun/feeds/test', 'thienkun/feeds/humid', 'tentoila24/feeds/temp'];
+  const topic = feeds[1];
+  
   const password = //'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
   'aio_RkrG82uhCi3HTC6Y4PNzNsKv1W5r';
   //const uri = 'mqtts://#thienkun:#aio_VwGf00hR9EfUZuJVX8yvnIwuGEf2@io.adafruit.com';
@@ -48,31 +47,41 @@ export default function LightScreen () {
   var client;
   
   function mqtt() {
-    var clientID = "myclientid_" + new Date().getTime();
+    var clientID = "myclientid_" + new Date().getTime() + new Date();
     client = new Paho.MQTT.Client(mqttHost, 443, clientID);
     // set callback handlers
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
     // connect the client
-
-    client.connect({ //onSuccess:onConnect, 
-      useSSL: true, userName: 'thienkun', password: password });
+    client.connect({ useSSL: true, userName: 'thienkun', password: password });
   }
-  
+
+  function subscribe(topics) {
+    if (client.isConnected())
+    {
+      for (let topic in topics)
+        client.subscribe(topic);
+    }
+    else
+    {
+      console.log('No connection');
+    }
+  }
   // called when the client connects
-  function onConnect() {
+  function onConnect(mess) {
     // Once a connection has been made, make a subscription and send a message.
     console.log("onConnect");
     if (!client.isConnected())
     {
-      console.log('No connection');
+      console.log('No connection'); 
     }
     else
     {
-      client.subscribe(topic);
-      var message = new Paho.MQTT.Message(Mess.toString());
-      console.log(message.topic);
+      //client.subscribe(topic);  
+      var message = new Paho.MQTT.Message(mess.toString());
       message.destinationName = topic;
+      message.retained = true;
+      //client.publish(message);
       client.send(message);
     }
     
@@ -105,7 +114,7 @@ export default function LightScreen () {
   // called when a message arrives
   function onMessageArrived(message) {
     console.log("onMessageArrived:" + message.payloadString);
-    changeMess(message.payloadString)
+    changeMess(message.payloadString);
   }
   const [Mess, changeMess] = useState(30.0);
   mqtt();
@@ -115,14 +124,14 @@ export default function LightScreen () {
         <Image style={{width: 25, height: 25}} source={require('../assets/left-arrow.png')}/>
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 30 }}>
-        <AppButton title='Light'/>
-        <AppButton title='Alarm'/>
+        <AppButton title='Light' />
+        <AppButton title='Alarm' onPress={() => navigation.navigate('Alarm Screen', {screen: 'AlarmScreen'})}/>
       </View>
       <View style={{ padding: 30, flexDirection:'row',  justifyContent: 'space-evenly'}}>
         <LightDensity title={Mess} />
       </View>
       <View style={{ padding: 30, flexDirection:'row', justifyContent: 'space-evenly'}}>
-        <OnOffSwitch/>
+        <OnOffSwitch/> 
       </View>
       <View>
         

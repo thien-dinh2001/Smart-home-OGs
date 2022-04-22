@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native';
 import Tabs from '../components/navigation';
-import AlarmScreen from './alarm';
 
 function HomeScreen({navigation}) {
     return (
@@ -11,6 +10,7 @@ function HomeScreen({navigation}) {
         <Text>Home!</Text>
         <Button title='Click me' onPress={() => navigation.navigate('Alarm Screen', {screen: 'AlarmScreen'})}/>
         <Button title='light' onPress={() => navigation.navigate('Light Screen', {screen: 'LightScreen'})}/>
+        <Button title='signin' onPress={() => navigation.navigate('Login Screen', {screen: 'LoginScreen'})}/>
       </View>
     );
 }

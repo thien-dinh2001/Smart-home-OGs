@@ -6,6 +6,7 @@ import { converter } from '../firebase/custom_object';
 import db from '../firebase/config';
 
 
+
 export default function AlarmScreen({navigation})
 {
   //fetch data
@@ -18,6 +19,7 @@ export default function AlarmScreen({navigation})
       console.log("No such document!");
     }
   })
+  
   //update data
   return (
     <View>

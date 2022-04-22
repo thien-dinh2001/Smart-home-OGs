@@ -3,8 +3,8 @@ import { Image, StyleSheet, View, Text, TextInput, Button, TouchableOpacity, Tou
 import {MaterialIcons} from '@expo/vector-icons';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {Ionicons} from '@expo/vector-icons';
-import Logo from '../assets/MediReminderLogo.png'
-import { useAuth } from "../Context/AuthContext";
+import Logo from '../assets/logo.png'
+import { useAuth } from "../context/AuthContext";
 import { Link } from "@react-navigation/native";
 
 export default function AuthenticationScreen({navigation}){
@@ -92,7 +92,7 @@ export default function AuthenticationScreen({navigation}){
                     size={20}
                     style={{alignSelf: 'center'}}
                   />
-						    </View>
+				</View>
 
                 {passwordError && <Text style={GlobalStyles.warning}>{passwordError}</Text>}
             

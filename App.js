@@ -8,6 +8,8 @@ import HomeScreen from './screen/home';
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, View } from 'react-native-web';
 import AlarmScreen from './screen/alarm';
+import LoginScreen from './screen/login';
+import AuthenticationScreen from './screen/authentication';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +42,16 @@ export default function App()
                     name={'Alarm Screen'}
                     component={AlarmScreen}
                     options={{ headerShown: true }}>
+                </Stack.Screen>
+                <Stack.Screen
+                    name={'Login Screen'}
+                    component={LoginScreen}
+                    options={{ headerShown: false }}>
+                </Stack.Screen>
+                <Stack.Screen
+                    name={'Auth Screen'}
+                    component={AuthenticationScreen}
+                    options={{ headerShown: false }}>
                 </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>       
