@@ -9,15 +9,15 @@ class Home extends Component{
       
       this.state = {
           devices:[
-              {
-                type: 'Temperature',
-              },
-              {
-                type: 'Light',
-              },
+              // {
+              //   type: 'Temperature',
+              // },
+              // {
+              //   type: 'Light',
+              // },
               {
                 icon: require('../ICON/aircon.png'),
-                
+                name: 'Aircon Screen'
               },
               {
                 icon: require('../ICON/Curtain.png'),
