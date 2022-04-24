@@ -113,9 +113,9 @@ class Aircon extends Component{
         
         <View style = {styles.User}>
             <Image style ={{width: 50, height: 50, top: '5%', left: '-2%'}} source={require('../ICON/arrow.png')}/>
-            <Text style = {styles.text}>Menu</Text>
+            <Text style = {styles.text}>Home</Text>
             <TouchableOpacity onPress={() => {click();}}>
-              <Image style ={{width: '70%', height: '70%', alignSelf: 'center', top: '10%'}} source={require('../ICON/onoff.png')}/>
+              <Image style ={{width: '70%', height: '70%', alignSelf: 'center', top: '10%'}} source={require('../ICON/onoff.png')} resizeMode='contain'/>
             </TouchableOpacity>
 
         </View>

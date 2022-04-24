@@ -1,7 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, StatusBar, Image, Pressable } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
-import Door from './door';
+import { useAuth } from "../context/AuthContext";
+
+
+
+async function getName(uid) {
+  const [name, setName] = useState(name);
+  await getDoc(doc(db, "User", uid)).then(docSnap => {
+    if (docSnap.exists()) {
+      console.log(docSnap.data().name);
+      setName(docSnap.data().name);
+    } else {
+      console.log("No such document!");
+    }
+  })
+}
+
 class Home extends Component{
     constructor(props){
       super(props)
@@ -21,7 +36,7 @@ class Home extends Component{
               },
               {
                 icon: require('../ICON/Curtain.png'),
-                name: 'Curtain Screen'
+                name: 'Light Screen'
               },
               {
                 icon: require('../ICON/Windows.png'),
@@ -42,15 +57,14 @@ class Home extends Component{
           
       };
     }
-
-    render(){
+    render(){ 
       return <View style = {styles.container}>
         <StatusBar backgroundColor= '#f1f1f1' barStyle='light-content'/>
         <View style = {styles.User}>
             <Image style ={{width: 50, height: 50, top: '5%', left: '5%'}} source={require('../ICON/USER.png')}/>
             <Text style = {styles.text}>Hello User</Text>
             <FlatGrid
-                style ={{flex: 1}}
+                style ={{flex: 1, marginTop: '20%'}}
                 itemDimension ={120}
                 data = {this.state.devices}
                 renderItem ={({item}) => (

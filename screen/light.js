@@ -28,7 +28,10 @@ export default function LightScreen ({navigation}) {
           trackColor={{ false: "#767577", true: "green" }}
           thumbColor={isEnabled ? "f4f3f4" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={() => {toggleSwitch() ; onConnect(!isEnabled)}}  
+          onValueChange={() => {
+            toggleSwitch(); 
+            onConnect(!isEnabled, feeds[0]);
+          }}  
           //onValueChange={toggleSwitch}
           value={isEnabled}
         />
@@ -37,10 +40,10 @@ export default function LightScreen ({navigation}) {
   };  
   //MQTT
   const feeds = ['thienkun/feeds/onoff', 'thienkun/feeds/test', 'thienkun/feeds/humid', 'tentoila24/feeds/temp'];
-  const topic = feeds[1];
+  //const topic = feeds[1];
   
   const password = //'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
-  'aio_RkrG82uhCi3HTC6Y4PNzNsKv1W5r';
+  'aio_MRjJ42fgnx14P2x4aAIy6OuylnNQ';
   //const uri = 'mqtts://#thienkun:#aio_VwGf00hR9EfUZuJVX8yvnIwuGEf2@io.adafruit.com';
   const mqttHost = 'io.adafruit.com';
   
@@ -53,22 +56,17 @@ export default function LightScreen ({navigation}) {
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
     // connect the client
-    client.connect({ useSSL: true, userName: 'thienkun', password: password });
+    client.connect({onSuccess:subscribe, useSSL: true, userName: 'thienkun', password: password, keepAliveInterval: 1000 });
   }
 
-  function subscribe(topics) {
-    if (client.isConnected())
-    {
-      for (let topic in topics)
-        client.subscribe(topic);
-    }
-    else
-    {
-      console.log('No connection');
-    }
+  function subscribe()
+  {
+    client.subscribe(feeds[0]);
+    client.subscribe(feeds[1]);
   }
+
   // called when the client connects
-  function onConnect(mess) {
+  function onConnect(mess, topic) {
     // Once a connection has been made, make a subscription and send a message.
     console.log("onConnect");
     if (!client.isConnected())
@@ -81,27 +79,10 @@ export default function LightScreen ({navigation}) {
       var message = new Paho.MQTT.Message(mess.toString());
       message.destinationName = topic;
       message.retained = true;
-      //client.publish(message);
       client.send(message);
     }
     
   }
-
-  /*function sendMessage(mess, topic) {
-    client = new Paho.MQTT.Client(mqttHost, 443, "myclientid_" + parseInt(Math.random() * 99999, 100));
-    client.connect({ useSSL: true, userName: 'tentoila24', password: password });
-    if (client.isConnected())
-    {
-      client.subscribe(topic);
-      var message = new Paho.MQTT.Message(mess.toString());
-      message.destinationName = topic;
-      client.send(mess);
-    }
-    else 
-    {
-      console.log('GG');
-    }
-  }*/
   
   // called when the client loses its connection
   function onConnectionLost(responseObject) {
@@ -114,9 +95,12 @@ export default function LightScreen ({navigation}) {
   // called when a message arrives
   function onMessageArrived(message) {
     console.log("onMessageArrived:" + message.payloadString);
-    changeMess(message.payloadString);
+    if (message.topic == feeds[1])
+    {
+      updateLight(message.payloadString);
+    }
   }
-  const [Mess, changeMess] = useState(30.0);
+  const [light, updateLight] = useState(30.0);
   mqtt();
   return (
     <View style={{padding: 10, margin: 10, flex: 1}}>
@@ -128,7 +112,7 @@ export default function LightScreen ({navigation}) {
         <AppButton title='Alarm' onPress={() => navigation.navigate('Alarm Screen', {screen: 'AlarmScreen'})}/>
       </View>
       <View style={{ padding: 30, flexDirection:'row',  justifyContent: 'space-evenly'}}>
-        <LightDensity title={Mess} />
+        <LightDensity title={light} />
       </View>
       <View style={{ padding: 30, flexDirection:'row', justifyContent: 'space-evenly'}}>
         <OnOffSwitch/> 
@@ -154,8 +138,6 @@ const styles = StyleSheet.create({
     borderRadius: 120/2,
     borderColor: 'black',
     borderWidth: 3,
-    //paddingVertical: 10,
-    //paddingHorizontal: 12,
     paddingVertical: 30,
     paddingHorizontal: 20,
   },

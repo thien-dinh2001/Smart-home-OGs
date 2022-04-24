@@ -4,13 +4,15 @@ import 'react-native-gesture-handler';
 import LightScreen from './screen/light';
 import NotificationsScreen from './screen/notification';
 import SettingsScreen from './screen/settings';
-import HomeScreen from './screen/home';
+import Home from './screen/home';
 import { NavigationContainer } from '@react-navigation/native';
-import { Button, View } from 'react-native-web';
 import AlarmScreen from './screen/alarm';
 import LoginScreen from './screen/login';
 import SignupScreen from './screen/signup';
 import AuthProvider from './context/AuthContext';
+import Aircon from './screen/aircon';
+import Door from './screen/door';
+import DoorPass from './screen/doorPass';
 
 const Stack = createStackNavigator();
 
@@ -22,9 +24,15 @@ export default function App()
                 <Stack.Navigator>
                     <Stack.Screen
                         name={'Home Screen'}
-                        component={HomeScreen}
+                        component={Home}
                         options={{ headerShown: false }}> 
                     </Stack.Screen>
+                    <Stack.Screen
+                        name={'Login Screen'}
+                        component={LoginScreen}
+                        options={{ headerShown: false }}>
+                    </Stack.Screen>
+                    
                     <Stack.Screen
                         name={'Setting Screen'}
                         component={SettingsScreen}
@@ -46,13 +54,23 @@ export default function App()
                         options={{ headerShown: true }}>
                     </Stack.Screen>
                     <Stack.Screen
-                        name={'Login Screen'}
-                        component={LoginScreen}
+                        name={'Signup Screen'}
+                        component={SignupScreen}
                         options={{ headerShown: false }}>
                     </Stack.Screen>
                     <Stack.Screen
-                        name={'Signup Screen'}
-                        component={SignupScreen}
+                        name={'Aircon Screen'}
+                        component={Aircon}
+                        options={{ headerShown: false }}>
+                    </Stack.Screen>
+                    <Stack.Screen
+                        name={'Door Screen'}
+                        component={Door}
+                        options={{ headerShown: false }}>
+                    </Stack.Screen>
+                    <Stack.Screen
+                        name={'DoorPass Screen'}
+                        component={DoorPass}
                         options={{ headerShown: false }}>
                     </Stack.Screen>
                 </Stack.Navigator>

@@ -3,7 +3,7 @@ import { doc, serverTimestamp, setDoc, collection } from "firebase/firestore";
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import db, {app} from "../firebase/config";
 import { getAuth } from "firebase/auth";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, styles } from '@react-navigation/native';
 
 const AuthContext = createContext();
 
@@ -28,7 +28,7 @@ export default function AuthProvider({ children })
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            navigation.navigate('Home Screen', {screen: 'HomeScreen'});
+            navigation.navigate('Home Screen', {screen: 'Home'});
             console.log('Log in successfully');
         })
         .catch((error) => {
@@ -62,7 +62,7 @@ export default function AuthProvider({ children })
     }
     
 
-    async function signup(email, password) 
+    async function signup(email, password, name) 
     {
         await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -70,6 +70,7 @@ export default function AuthProvider({ children })
             const user = userCredential.user;
             createProfile = () => {
                 setDoc(doc(db, 'User', user.uid), {
+                    name: name,
                     email: email, 
                     password: password,
                     createdAt: serverTimestamp(),

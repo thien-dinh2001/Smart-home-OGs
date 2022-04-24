@@ -15,6 +15,7 @@ const AppButton = ({ onPress, title }) => (
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [confirm, setConfirm] = useState();
   const [name, setName] = useState();
   const [secure, setSecure] = useState(true);
   const { signup, error, setError } = useAuth();
@@ -22,7 +23,7 @@ const SignupScreen = ({navigation}) => {
   const handleClick = async () => {
     try {
         setLoading(true)
-        await signup(email, password)
+        await signup(email, password, name)
     } catch (e) {
         // setError('Invalid email or password')
         console.log('Login error:', e.message);
@@ -44,7 +45,6 @@ const SignupScreen = ({navigation}) => {
         </TextInput>
         <View style={styles.passwordContainter}>
           <TextInput 
-            style={{}}
             placeholder='Password'
             secureTextEntry={secure}
             onChangeText={ text => setPassword(text) }>
@@ -58,10 +58,9 @@ const SignupScreen = ({navigation}) => {
         </View>
         <View style={styles.passwordContainter}>
           <TextInput 
-            style={{}}
             placeholder='Confirm Password'
             secureTextEntry={secure}
-            onChangeText={ text => setPassword(text) }>
+            onChangeText={ text => setConfirm(text) }>
           </TextInput>
           <Ionicons
             onPress={() => setSecure(!secure)}
