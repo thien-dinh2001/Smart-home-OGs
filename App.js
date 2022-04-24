@@ -23,15 +23,16 @@ export default function App()
             <AuthProvider>
                 <Stack.Navigator>
                     <Stack.Screen
-                        name={'Home Screen'}
-                        component={Home}
-                        options={{ headerShown: false }}> 
-                    </Stack.Screen>
-                    <Stack.Screen
                         name={'Login Screen'}
                         component={LoginScreen}
                         options={{ headerShown: false }}>
                     </Stack.Screen>
+                    <Stack.Screen
+                        name={'Home Screen'}
+                        component={Home}
+                        options={{ headerShown: false }}> 
+                    </Stack.Screen>
+                    
                     
                     <Stack.Screen
                         name={'Setting Screen'}
