@@ -1,51 +1,119 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
-import {Component, useState} from 'react';
-import { useAuth } from '../context/AuthContext'
-import db from '../firebase/config'
-//import firestore from '@react-native-firebase/firestore';
+import React, { Component } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, StatusBar, Image, Pressable } from 'react-native';
+import { FlatGrid } from 'react-native-super-grid';
 
-export default class SettingsScreen extends Component {
-    static navigationOptions = {
-        title: 'Settings Screen',
-    };
+export default class SettingsScreen extends Component{
+    constructor(props){
+        super(props)
 
-    constructor(props) {
-        super(props);
         this.state = {
-
-        }
+            settings:[
+                {
+                    icon: require('../ICON/USER.png'),
+                    screen: 'Profile Screen',
+                    name: 'Profile',
+                },
+            ],
+        };
     }
 
-    render()
-    {
-        return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF'}}>
-                <Text>Settings</Text>
-
-                <TouchableOpacity style={styles.buttonContainer}
-                                  onPress={() => navigate('Profile Screen', {screen: 'ProfileScreen'})}>
-                    <Text style={styles.buttonText}>User</Text>
-                </TouchableOpacity>
-
-
+    render(){
+        return <View style = {styles.container}>
+            <StatusBar backgroundColor= '#f1f1f1' barStyle='light-content'/>
+            <View style = {styles.User}>
+                <Text style = {styles.title}>Settings</Text>
+                <FlatGrid
+                    style ={{flex: 1}}
+                    itemDimension ={200}
+                    data = {this.state.settings}
+                    renderItem ={({item}) => (
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate(item.screen)} style = {styles.tab}>
+                            <Image style ={{width: 50, height: 50, alignSelf: 'left',top: '20%', left: '5%'}} source={item.icon}/>
+                            <Text style = {styles.tabText}>{item.name}</Text>
+                        </TouchableOpacity>
+                    )}
+                />
             </View>
-        );
+
+            <View style = {styles.navContainer}>
+                <View style = {styles.navbar}>
+                    <Pressable onPress={() => this.changeText('Home')} style={styles.IconBehave}>
+                        <Image style ={{width: 50, height: 50, alignSelf: 'center', bottom: '-65%'}} source={require('../ICON/home.jpg')}/>
+                    </Pressable>
+
+                    <Pressable onPress={() => this.changeText('Settings')} style={styles.IconBehave}>
+                        <Image style ={{width: 40, height: 40, right: '-78%', top: '0%'}} source={require('../ICON/setting.png')}/>
+                    </Pressable>
+
+                    <Pressable onPress={() => this.changeText('Notification')} style={styles.IconBehave}>
+                        <Image style ={{width: 50, height: 50, right: '-5%', top: '-70%'}} source={require('../ICON/BELL.jpg')}/>
+                    </Pressable>
+                </View>
+            </View>
+        </View>
     }
-};
+}
 
 const styles = StyleSheet.create({
-    buttonContainer: {
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        backgroundColor: "#009688",
-        borderRadius: 10,
-        padding: 12,
+    container: {
+        flex: 1,
+        backgroundColor: '#f1f1f1',
+        alignItems: "center",
     },
-    buttonText: {
-        fontSize: 17,
+
+    User:{
+        flex: 1,
+        margin: 20
+    },
+
+    title:{
+        color: "#000",
+        fontSize: 43,
+        fontWeight: 'bold',
+        textAlign: 'left',
+        top: '3%',
+        left: '3%'
+    },
+
+    tab:{
+        backgroundColor: '#ffffff',
+        height: 80,
+        top: '15%',
+        borderRadius: 13,
+        elevation: 3,
+    },
+    tab1:{
+        backgroundColor: '#ffffff',
+        height: 100,
+        top: '10%',
+        borderRadius: 15,
+        elevation: 3
+    },
+    tabText:{
+        fontWeight: 'normal',
+        fontFamily: 'Arial',
+        fontSize: 31,
+        //justifyContent: 'center',
+        alignItems: 'center',
+        left: '31%',
+        top: '-31%',
+    },
+
+    navContainer: {
+        position: 'absolute',
         alignSelf: 'center',
-        fontWeight: "bold",
-        color: 'white'
+        bottom: 30,
+        width: '70%',
+        height: 70
     },
+    navbar:{
+        backgroundColor: '#ffffff',
+        width: '100%',
+        justifyContent: 'space-evenly',
+        borderRadius: 40,
+    },
+    IconBehave:{
+        padding: 14
+    }
+
 });
