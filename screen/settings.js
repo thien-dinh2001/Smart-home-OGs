@@ -45,7 +45,7 @@ export default class SettingScreen extends Component{
                         <Image style ={{width: 40, height: 40, right: '-78%', top: '0%'}} source={require('../ICON/setting.png')}/>
                     </Pressable>
 
-                    <Pressable onPress={()=>{}} style={styles.IconBehave}>
+                    <Pressable onPress={()=>{this.props.navigation.navigate('Notification Screen')}} style={styles.IconBehave}>
                         <Image style ={{width: 50, height: 50, right: '-5%', top: '-70%'}} source={require('../ICON/BELL.jpg')}/>
                     </Pressable>
                 </View>

@@ -18,6 +18,7 @@ import Profile from './screen/profile';
 import Home from './screen/home';
 import SettingScreen from './screen/settings';
 import LightScreen from './screen/light';
+import NotificationsScreen from './screen/notification';
 
 
 const Stack = createStackNavigator();
@@ -61,11 +62,11 @@ export default function App()
                     </Stack.Screen>
                     
                     
-                    {/*<Stack.Screen
+                    <Stack.Screen
                         name={'Notification Screen'}
                         component={NotificationsScreen}
                         options={{ headerShown: false }}>
-                    </Stack.Screen>*/}
+                    </Stack.Screen>
                     <Stack.Screen
                         name={'Light Screen'}
                         component={LightScreen}
