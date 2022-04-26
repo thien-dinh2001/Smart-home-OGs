@@ -98,7 +98,6 @@ export default function AuthProvider({ children })
     useEffect(() => {
         try {
             const unsubcribe = onAuthStateChanged(auth, user => {
-            
                 setCurrentUser(user)
                 setLoading(false);
         })

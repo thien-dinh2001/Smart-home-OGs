@@ -72,14 +72,14 @@ const SignupScreen = ({navigation}) => {
       <AppButton 
         title="Sign up" 
         onPress={handleClick}/>
-      <View style={{ flexDirection: 'row', }}>
-				<Text style = {{ marginLeft: 7, marginTop: 12 }}>Already have an acount?</Text>
+      <View style={{ flexDirection: 'row'}}>
+				<Text style = {{ marginLeft: 7, marginTop: 5 }}>Already have an acount?</Text>
         <Text 
           onPress={() => {
             setError()
             navigation.navigate('Login Screen')}
           }
-          style={{color: 'white', fontWeight: 'bold', marginTop: 12, marginLeft: 5}}> 
+          style={{color: 'gray', fontWeight: 'bold', marginTop: 5, marginLeft: 5}}> 
           Login here
         </Text>
 			</View>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 80,
-    backgroundColor: "#555",
+    //backgroundColor: "#555",
   },
   appButtonText: {
     fontSize: 17,
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#009688",
     borderRadius: 10,
     padding: 12,
+    margin: 10,
   },
   passwordContainter: {
     flexDirection: 'row', 

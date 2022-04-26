@@ -112,27 +112,27 @@ class Aircon extends Component{
         <StatusBar backgroundColor= '#f1f1f1' barStyle='light-content'/>
         
         <View style = {styles.User}>
-            <Image style ={{width: 50, height: 50, top: '5%', left: '-2%'}} source={require('../ICON/arrow.png')}/>
-            <Text style = {styles.text}>Home</Text>
-            <TouchableOpacity onPress={() => {click();}}>
-              <Image style ={{width: '70%', height: '70%', alignSelf: 'center', top: '10%'}} source={require('../ICON/onoff.png')} resizeMode='contain'/>
-            </TouchableOpacity>
+          <Image style ={{width: 50, height: 50, top: '5%', left: '-2%'}} source={require('../ICON/arrow.png')}/>
+          <Text style = {styles.text}>Home</Text>
+          <TouchableOpacity onPress={() => {click();}}>
+            <Image style ={{width: '70%', height: '70%', alignSelf: 'center', top: '10%'}} source={require('../ICON/onoff.png')} resizeMode='contain'/>
+          </TouchableOpacity>
 
         </View>
         <View style = {styles.navContainer}>
-                <View style = {styles.navbar}>
-                    <Pressable onPress={() => this.changeText('Home')} style={styles.IconBehave}>
-                        <Image style ={{width: 50, height: 50, alignSelf: 'center', bottom: '-65%'}} source={require('../ICON/home.jpg')}/>
-                    </Pressable>
+          <View style = {styles.navbar}>
+            <Pressable onPress={() => this.changeText('Home')} style={styles.IconBehave}>
+              <Image style ={{width: 50, height: 50, alignSelf: 'center', bottom: '-65%'}} source={require('../ICON/home.jpg')}/>
+            </Pressable>
 
-                    <Pressable onPress={() => this.changeText('Settings')} style={styles.IconBehave}>
-                        <Image style ={{width: 40, height: 40, right: '-78%', top: '0%'}} source={require('../ICON/setting.png')}/>
-                    </Pressable>
+            <Pressable onPress={() => this.changeText('Settings')} style={styles.IconBehave}>
+              <Image style ={{width: 40, height: 40, right: '-78%', top: '0%'}} source={require('../ICON/setting.png')}/>
+            </Pressable>
 
-                    <Pressable onPress={() => this.changeText('Notification')} style={styles.IconBehave}>
-                        <Image style ={{width: 50, height: 50, right: '-5%', top: '-70%'}} source={require('../ICON/BELL.jpg')}/>
-                    </Pressable>
-                </View>
+            <Pressable onPress={() => this.changeText('Notification')} style={styles.IconBehave}>
+              <Image style ={{width: 50, height: 50, right: '-5%', top: '-70%'}} source={require('../ICON/BELL.jpg')}/>
+            </Pressable>
+          </View>
         </View>
       </View>
     }

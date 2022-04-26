@@ -1,18 +1,24 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import LightScreen from './screen/light';
-import NotificationsScreen from './screen/notification';
-import SettingsScreen from './screen/settings';
-import Home from './screen/home';
 import { NavigationContainer } from '@react-navigation/native';
+//import provider
+import AuthProvider from './context/AuthContext';
+import DataProvider from './context/DataContext';
+//import screen
 import AlarmScreen from './screen/alarm';
 import LoginScreen from './screen/login';
 import SignupScreen from './screen/signup';
-import AuthProvider from './context/AuthContext';
 import Aircon from './screen/aircon';
 import Door from './screen/door';
 import DoorPass from './screen/doorPass';
+import TempScreen from './screen/temp';
+import HumidScreen from './screen/humid';
+import Profile from './screen/profile';
+import Home from './screen/home';
+import SettingScreen from './screen/settings';
+import LightScreen from './screen/light';
+
 
 const Stack = createStackNavigator();
 
@@ -21,6 +27,7 @@ export default function App()
     return (
         <NavigationContainer>
             <AuthProvider>
+                <DataProvider>
                 <Stack.Navigator>
                     <Stack.Screen
                         name={'Login Screen'}
@@ -32,18 +39,33 @@ export default function App()
                         component={Home}
                         options={{ headerShown: false }}> 
                     </Stack.Screen>
-                    
-                    
                     <Stack.Screen
                         name={'Setting Screen'}
-                        component={SettingsScreen}
+                        component={SettingScreen}
                         options={{ headerShown: false }}>
                     </Stack.Screen>
                     <Stack.Screen
+                        name={'Profile Screen'}
+                        component={Profile}
+                        options={{ headerShown: false }}> 
+                    </Stack.Screen>
+                    <Stack.Screen
+                        name={'Temp Screen'}
+                        component={TempScreen}
+                        options={{ headerShown: false }}>
+                    </Stack.Screen>
+                    <Stack.Screen
+                        name={'Humid Screen'}
+                        component={HumidScreen}
+                        options={{ headerShown: false }}>
+                    </Stack.Screen>
+                    
+                    
+                    {/*<Stack.Screen
                         name={'Notification Screen'}
                         component={NotificationsScreen}
                         options={{ headerShown: false }}>
-                    </Stack.Screen>
+                    </Stack.Screen>*/}
                     <Stack.Screen
                         name={'Light Screen'}
                         component={LightScreen}
@@ -75,6 +97,7 @@ export default function App()
                         options={{ headerShown: false }}>
                     </Stack.Screen>
                 </Stack.Navigator>
+                </DataProvider>
             </AuthProvider>  
         </NavigationContainer>   
     );

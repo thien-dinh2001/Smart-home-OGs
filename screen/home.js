@@ -24,12 +24,16 @@ class Home extends Component{
       
       this.state = {
           devices:[
-              // {
-              //   type: 'Temperature',
-              // },
-              // {
-              //   type: 'Light',
-              // },
+               {
+                 type: 'Temperature',
+                 icon: require('../ICON/thermometer.png'),
+                 name: 'Temp Screen',
+               },
+               {
+                 type: 'Humid',
+                 name: 'Humid Screen',
+                 icon: require('../ICON/humidity.png'),
+               },
               {
                 icon: require('../ICON/aircon.png'),
                 name: 'Aircon Screen'
@@ -61,10 +65,15 @@ class Home extends Component{
       return <View style = {styles.container}>
         <StatusBar backgroundColor= '#f1f1f1' barStyle='light-content'/>
         <View style = {styles.User}>
-            <Image style ={{width: 50, height: 50, top: '5%', left: '5%'}} source={require('../ICON/USER.png')}/>
+            <TouchableOpacity 
+              onPress={() => this.props.navigation.navigate('Profile Screen')}
+              style={{top: '5%', left: '5%'}}
+              >
+              <Image style ={{width: 60, height: 60}} source={require('../ICON/USER.png')}/>
+            </TouchableOpacity>
             <Text style = {styles.text}>Hello User</Text>
             <FlatGrid
-                style ={{flex: 1, marginTop: '20%'}}
+                style ={{flex: 1, marginTop: '10%'}}
                 itemDimension ={120}
                 data = {this.state.devices}
                 renderItem ={({item}) => (
@@ -77,15 +86,15 @@ class Home extends Component{
         </View>
         <View style = {styles.navContainer}>
                 <View style = {styles.navbar}>
-                    <Pressable onPress={() => this.changeText('Home')} style={styles.IconBehave}>
+                    <Pressable onPress={() => this.props.navigation.navigate('Home Screen')} style={styles.IconBehave}>
                         <Image style ={{width: 50, height: 50, alignSelf: 'center', bottom: '-65%'}} source={require('../ICON/home.jpg')}/>
                     </Pressable>
 
-                    <Pressable onPress={() => this.changeText('Settings')} style={styles.IconBehave}>
+                    <Pressable onPress={() => this.props.navigation.navigate('Setting Screen')} style={styles.IconBehave}>
                         <Image style ={{width: 40, height: 40, right: '-78%', top: '0%'}} source={require('../ICON/setting.png')}/>
                     </Pressable>
 
-                    <Pressable onPress={() => this.changeText('Notification')} style={styles.IconBehave}>
+                    <Pressable onPress={()=>{}} style={styles.IconBehave}>
                         <Image style ={{width: 50, height: 50, right: '-5%', top: '-70%'}} source={require('../ICON/BELL.jpg')}/>
                     </Pressable>
                 </View>

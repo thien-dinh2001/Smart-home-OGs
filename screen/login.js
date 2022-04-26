@@ -63,14 +63,14 @@ const LoginScreen = ({navigation}) => {
         </Text>
         <Text 
           onPress={() => {setError(); navigation.navigate('Signup Screen')}} 
-          style={{color: 'white', fontWeight: 'bold', marginLeft: 5}}> 
+          style={{color: 'gray', fontWeight: 'bold', marginLeft: 5}}> 
           Sign up
         </Text>
       </View>
       <AppButton 
         icon="sign-in" 
         title="Login with Password" 
-        backgroundColor="gray" 
+        backgroundColor="#009688" 
         //onPress={() => navigation.navigate('Auth Screen', {screen: 'AuthenticationScreen'})}
         onPress={handleClick}
         />
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 80,
-    backgroundColor: "#555",
+    //backgroundColor: "white",
   },
   appButton: {
     padding: 12,
