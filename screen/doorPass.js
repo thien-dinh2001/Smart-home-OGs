@@ -17,8 +17,8 @@ if (majorVersionIOS <= 9) {
 const feeds = ['tentoila24/feeds/doorpass'];
 const topic = feeds[0];
 
-const pass = //'aio_WDBL81K7RVz0CRu1yWKhf4v0wP9f';
-'aio_pClT87yWsrJnd3xm44PMuFeinhew';
+const password = 'aio_pClT87yWsrJnd3xm44PMuFeinhew';
+// 'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
 const mqttHost = 'io.adafruit.com';
 var client;
 
@@ -29,7 +29,7 @@ function mqtt() {
   client.onConnectionLost = onConnectionLost;
   client.onMessageArrived = onMessageArrived;
   // connect the client
-  client.connect({ useSSL: true, userName: 'tentoila24', password: pass });
+  client.connect({ useSSL: true, userName: 'tentoila24', password: password });
 }
 
 function subscribe(topics) {
@@ -54,7 +54,7 @@ function onConnect(mess) {
   else
   {
     client.subscribe(topic);  
-    var message = new Paho.MQTT.Message(mess.toString());
+    var message = new Paho.MQTT.Message(mess);
     message.destinationName = topic;
     message.retained = false;
     //client.publish(message);
@@ -76,7 +76,7 @@ function onMessageArrived(message) {
   console.log(message.topic);
 }
 
-function password({text, number, number1}){
+function passchange({text, number, number1}){
   getDoc(doc(db, "Devices", '1000')).then(docSnap => {
     console.log("Old pass: ", docSnap.data().Password)
     if (text == docSnap.data().Password && number1 == number)
@@ -91,8 +91,9 @@ function password({text, number, number1}){
           Password: number
           })
           alert("Success!");
+          console.log("new pass: ", number)
       }
-      onConnect(number);
+      onConnect(number)
     }
     if (text != docSnap.data().Password )
     {
@@ -103,7 +104,6 @@ function password({text, number, number1}){
       alert("Confirm your new Password again!")
     }
   })
-  
 }
 
 const DoorPass = () => {
@@ -150,8 +150,7 @@ const DoorPass = () => {
               style = {styles.button}
               title="Change Password"
               onPress={() =>{
-                password({text, number, number1})
-                console.log("new pass: ", number)
+                passchange({text, number, number1})
               }}
             />
 

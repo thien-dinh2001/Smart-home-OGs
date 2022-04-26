@@ -4,7 +4,6 @@ import { FlatGrid } from 'react-native-super-grid';
 import {doc, collection, documentId, query, where, getDocs, updateDoc, getDoc } from "firebase/firestore";
 // import firestore from '@react-native-firebase/firestore';
 import db from "../firebase/config";
-import { clickProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 // import { useEffect } from 'react';
 import init from 'react_native_mqtt';
 import {AsyncStorage} from '@react-native-async-storage/async-storage';
@@ -18,7 +17,7 @@ init({
 });
 
 //MQTT
-const feeds = ['tentoila24/feeds/dooropen'];
+const feeds = ['tentoila24/feeds/window-status'];
 const topic = feeds[0];
 
 const password = 'aio_pClT87yWsrJnd3xm44PMuFeinhew';
@@ -80,69 +79,33 @@ function onMessageArrived(message) {
   console.log(message.topic);
 }
 
-
-
-function clickClosed()
+function click()
     {
-      getDoc(doc(db, "Devices", '1000')).then(docSnap => {
-        if (docSnap.exists()) {
-          if (docSnap.data().isActive == false)
-          {
-            updateDoc(doc(db, "Devices", '1000'), {
-              isActive: true,
-              Current_Status: "Closed"
-            })
-          }
-        } else {
-          console.log("No such document!");
-        }
-        onConnect(1)
-      })
-    }
-
-function clickOpen()
-    {
-      getDoc(doc(db, "Devices", '1000')).then(docSnap => {
+      getDoc(doc(db, "Devices", '1003')).then(docSnap => {
         if (docSnap.exists()) {
           if (docSnap.data().isActive == true)
           {
-            updateDoc(doc(db, "Devices", '1000'), {
+            updateDoc(doc(db, "Devices", '1003'), {
               isActive: false,
-              Current_Status: "Open"
+              Current_Status: "Off"
             })
+            onConnect('ON')
           }
-        } else {
-          console.log("No such document!");
+          if (docSnap.data().isActive == false)
+          {
+            updateDoc(doc(db, "Devices", '1003'), {
+              isActive: true,
+              Current_Status: "On"
+            })
+            onConnect("OFF")
+          }
         }
-        onConnect(0)
       })
+      
     }    
   
-class Door extends Component{
+class Windows extends Component{
   
-    constructor(props){
-      super(props)
-      
-      this.state = {
-          devices:[
-              {
-                type: 'ALARM',
-              },
-          ],
-          password:[
-            {
-                type: 'CHANGE PASSWORD',
-                name: 'DoorPass'
-              },
-          ],
-          // text: 'Lock',
-          // text1: 'Unlock'
-      };
-      
-    }
-
-  
-
     //ADAFRUIT
     render(){
       mqtt();
@@ -152,27 +115,10 @@ class Door extends Component{
         <View style = {styles.User}>
             <Image style ={{width: 50, height: 50, top: '5%', left: '-2%'}} source={require('../ICON/arrow.png')}/>
             <Text style = {styles.text}>Menu</Text>
-            <TouchableOpacity onPress={() => {clickClosed();}} activeOpacity={0.5} style={styles.IconBehave}>
-                        <Image style ={{width: 50, height: 50, left: '30%', top: 4}} source={require('../ICON/lock.png')}/>
-                    </TouchableOpacity>
+            <TouchableOpacity onPress={() => {click();}}>
+              <Image style ={{width: '70%', height: '70%', alignSelf: 'center', top: '10%'}} source={require('../ICON/onoff.png')}/>
+            </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => {clickOpen();}} >
-                        <Image style ={{width: 50, height: 50, right: '-60%', top: -60}} source={require('../ICON/unlock.png')}/>
-                    </TouchableOpacity>
-            <FlatGrid
-                style ={{flex: 1}}
-                itemDimension ={300}
-                data = {this.state.password}
-                renderItem ={({item}) => (
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('DoorPass Screen')} style = {styles.tab1}>
-                      
-                      <Text style = {styles.tabText}>{item.type}</Text>
-                      
-                  </TouchableOpacity>
-                  )}
-                
-                
-            />
         </View>
         <View style = {styles.navContainer}>
                 <View style = {styles.navbar}>
@@ -193,7 +139,7 @@ class Door extends Component{
     }
 }
 
-export default Door;
+export default Windows;
 
 
 
