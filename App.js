@@ -19,7 +19,7 @@ import Home from './screen/home';
 import SettingScreen from './screen/settings';
 import LightScreen from './screen/light';
 import NotificationsScreen from './screen/notification';
-
+import Windows from './screen/windows';
 
 const Stack = createStackNavigator();
 
@@ -85,6 +85,11 @@ export default function App()
                     <Stack.Screen
                         name={'Aircon Screen'}
                         component={Aircon}
+                        options={{ headerShown: false }}>
+                    </Stack.Screen>
+			  <Stack.Screen
+                        name={'Windows Screen'}
+                        component={Windows}
                         options={{ headerShown: false }}>
                     </Stack.Screen>
                     <Stack.Screen

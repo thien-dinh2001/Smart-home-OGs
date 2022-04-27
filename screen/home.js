@@ -44,6 +44,7 @@ class Home extends Component{
               },
               {
                 icon: require('../ICON/Windows.png'),
+		    name: 'Windows Screen'
               },
               {
                 icon: require('../ICON/door.png'),
