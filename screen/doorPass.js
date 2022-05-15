@@ -17,7 +17,7 @@ if (majorVersionIOS <= 9) {
 const feeds = ['tentoila24/feeds/doorpass'];
 const topic = feeds[0];
 
-const password = 'aio_pClT87yWsrJnd3xm44PMuFeinhew';
+const password = 'aio_usWu17O0FXcVE3lAletS2mcJS1I1';
 // 'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
 const mqttHost = 'io.adafruit.com';
 var client;
@@ -29,14 +29,13 @@ function mqtt() {
   client.onConnectionLost = onConnectionLost;
   client.onMessageArrived = onMessageArrived;
   // connect the client
-  client.connect({ useSSL: true, userName: 'tentoila24', password: password });
+  client.connect({onSuccess:subscribe, useSSL: true, userName: 'tentoila24', password: password });
 }
 
-function subscribe(topics) {
+function subscribe() {
   if (client.isConnected())
   {
-    for (let topic in topics)
-      client.subscribe(topic);
+    client.subscribe(topic);
   }
   else
   {
@@ -53,7 +52,7 @@ function onConnect(mess) {
   }
   else
   {
-    client.subscribe(topic);  
+    //client.subscribe(topic);  
     var message = new Paho.MQTT.Message(mess);
     message.destinationName = topic;
     message.retained = false;
@@ -92,8 +91,8 @@ function passchange({text, number, number1}){
           })
           alert("Success!");
           console.log("new pass: ", number)
+          onConnect(number)
       }
-      onConnect(number)
     }
     if (text != docSnap.data().Password )
     {
@@ -111,10 +110,6 @@ const DoorPass = () => {
     const [text, onChangeText] = React.useState("");
     const [number, onChangeNumber] = React.useState(null);
     const [number1, onChangeNumber2] = React.useState(null);
-
-    const handleChange = (event)=>{
-      setValue(event.target.value);
-    }
 
     mqtt();
     return(

@@ -21,7 +21,8 @@ init({
 const feeds = ['tentoila24/feeds/dooropen'];
 const topic = feeds[0];
 
-const password = 'aio_pClT87yWsrJnd3xm44PMuFeinhew';
+const password = //'aio_pClT87yWsrJnd3xm44PMuFeinhew';
+'aio_usWu17O0FXcVE3lAletS2mcJS1I1';
 // 'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
 const mqttHost = 'io.adafruit.com';
 var client;
@@ -57,11 +58,10 @@ function onConnect(mess) {
   }
   else
   {
-    client.subscribe(topic);  
+    //client.subscribe(topic);  
     var message = new Paho.MQTT.Message(mess.toString());
     message.destinationName = topic;
     message.retained = false;
-    //client.publish(message);
     client.send(message);
   }
   
@@ -92,11 +92,12 @@ function clickClosed()
               isActive: true,
               Current_Status: "Closed"
             })
+            onConnect(1)
           }
         } else {
           console.log("No such document!");
         }
-        onConnect(1)
+        
       })
     }
 
@@ -110,11 +111,12 @@ function clickOpen()
               isActive: false,
               Current_Status: "Open"
             })
+            onConnect(0)
           }
         } else {
           console.log("No such document!");
         }
-        onConnect(0)
+        
       })
     }    
   

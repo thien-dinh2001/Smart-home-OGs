@@ -18,11 +18,12 @@ init({
 });
 
 //MQTT
-const feeds = ['thienkun/feeds/onoff', 'thienkun/feeds/test'];
+const feeds = ['tentoila24/feeds/on-off'];
 const topic = feeds[0];
 
-const password = 'aio_GOoz59yUCW4QSXoOd831dGRdYxu5';
+const password = //'aio_GOoz59yUCW4QSXoOd831dGRdYxu5';
 // 'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
+'aio_usWu17O0FXcVE3lAletS2mcJS1I1';
 const mqttHost = 'io.adafruit.com';
 var client;
 
@@ -33,7 +34,7 @@ function mqtt() {
   client.onConnectionLost = onConnectionLost;
   client.onMessageArrived = onMessageArrived;
   // connect the client
-  client.connect({ useSSL: true, userName: 'thienkun', password: password });
+  client.connect({ useSSL: true, userName: 'tentoila24', password: password });
 }
 
 function subscribe(topics) {
@@ -90,6 +91,7 @@ function click()
               isActive: false,
               Current_Status: "Off"
             })
+            onConnect(0)
           }
           if (docSnap.data().isActive == false)
           {
@@ -97,10 +99,10 @@ function click()
               isActive: true,
               Current_Status: "On"
             })
+            onConnect(1)
           }
         }
       })
-      onConnect(false)
     }    
   
 class Aircon extends Component{

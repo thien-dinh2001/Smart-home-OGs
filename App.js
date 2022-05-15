@@ -4,7 +4,7 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 //import provider
 import AuthProvider from './context/AuthContext';
-import DataProvider from './context/DataContext';
+//import DataProvider from './context/DataContext';
 //import screen
 import AlarmScreen from './screen/alarm';
 import LoginScreen from './screen/login';
@@ -28,7 +28,7 @@ export default function App()
     return (
         <NavigationContainer>
             <AuthProvider>
-                <DataProvider>
+                {/* <DataProvider> */}
                 <Stack.Navigator>
                     <Stack.Screen
                         name={'Login Screen'}
@@ -60,8 +60,6 @@ export default function App()
                         component={HumidScreen}
                         options={{ headerShown: false }}>
                     </Stack.Screen>
-                    
-                    
                     <Stack.Screen
                         name={'Notification Screen'}
                         component={NotificationsScreen}
@@ -103,7 +101,7 @@ export default function App()
                         options={{ headerShown: false }}>
                     </Stack.Screen>
                 </Stack.Navigator>
-                </DataProvider>
+                {/* </DataProvider> */}
             </AuthProvider>  
         </NavigationContainer>   
     );

@@ -30,7 +30,12 @@ export default function LightScreen ({navigation}) {
           ios_backgroundColor="#3e3e3e"
           onValueChange={() => {
             toggleSwitch(); 
-            onConnect(!isEnabled, feeds[0]);
+            var t = 0;
+            if (isEnabled)
+            {
+              t = 1;
+            }
+            onConnect(t, feeds[5]);
           }}  
           //onValueChange={toggleSwitch}
           value={isEnabled}
@@ -39,11 +44,12 @@ export default function LightScreen ({navigation}) {
     );
   };  
   //MQTT
-  const feeds = ['thienkun/feeds/onoff', 'thienkun/feeds/test', 'thienkun/feeds/humid', 'tentoila24/feeds/temp'];
+  const feeds = ['thienkun/feeds/onoff', 'thienkun/feeds/test', 'thienkun/feeds/humid', 'tentoila24/feeds/temp', 'tentoila24/feeds/lightdensity', 'tentoila24/feeds/curtain'];
   //const topic = feeds[1];
   
-  const password = //'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
-  'aio_MRjJ42fgnx14P2x4aAIy6OuylnNQ';
+  const password =
+  //'aio_MRjJ42fgnx14P2x4aAIy6OuylnNQ';
+  'aio_usWu17O0FXcVE3lAletS2mcJS1I1';
   //const uri = 'mqtts://#thienkun:#aio_VwGf00hR9EfUZuJVX8yvnIwuGEf2@io.adafruit.com';
   const mqttHost = 'io.adafruit.com';
   
@@ -56,13 +62,13 @@ export default function LightScreen ({navigation}) {
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
     // connect the client
-    client.connect({onSuccess:subscribe, useSSL: true, userName: 'thienkun', password: password, keepAliveInterval: 1000 });
+    client.connect({onSuccess:subscribe, useSSL: true, userName: 'tentoila24', password: password, keepAliveInterval: 1000 });
   }
 
   function subscribe()
   {
-    client.subscribe(feeds[0]);
-    client.subscribe(feeds[1]);
+    client.subscribe(feeds[4]);
+    client.subscribe(feeds[5]);
   }
 
   // called when the client connects
@@ -78,7 +84,7 @@ export default function LightScreen ({navigation}) {
       //client.subscribe(topic);  
       var message = new Paho.MQTT.Message(mess.toString());
       message.destinationName = topic;
-      message.retained = true;
+      //message.retained = true;
       client.send(message);
     }
     
@@ -95,7 +101,7 @@ export default function LightScreen ({navigation}) {
   // called when a message arrives
   function onMessageArrived(message) {
     console.log("onMessageArrived:" + message.payloadString);
-    if (message.topic == feeds[1])
+    if (message.topic == feeds[4])
     {
       updateLight(message.payloadString);
     }
@@ -107,10 +113,10 @@ export default function LightScreen ({navigation}) {
       <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingTop: 20 }}>
         <Image style={{width: 25, height: 25}} source={require('../assets/left-arrow.png')}/>
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 30 }}>
+      {/*<View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 30 }}>
         <AppButton title='Light' />
         <AppButton title='Alarm' onPress={() => navigation.navigate('Alarm Screen', {screen: 'AlarmScreen'})}/>
-      </View>
+      </View>*/}
       <View style={{ padding: 30, flexDirection:'row',  justifyContent: 'space-evenly'}}>
         <LightDensity title={light} />
       </View>
@@ -187,7 +193,7 @@ const LightDensity = ({ onPress, title}) => (
   </TouchableOpacity>
 );
 
-const screenWidth = Dimensions.get('window').width;
+//const screenWidth = Dimensions.get('window').width;
 
 const OnOffSwitch = () =>
 {

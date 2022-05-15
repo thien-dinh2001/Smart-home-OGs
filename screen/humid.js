@@ -13,10 +13,10 @@ import { useData } from "../context/DataContext";
 const screenWidth = Dimensions.get('screen');
 
 function HumidScreen() {
-  const { payload, topic } = useData();
-  var [data, setData] = useState([0, 5, 8, 2, 2]);
-  var temp = [1, 4, 6, 2, 3];
-  const [t, setT] = useState();
+  //const { payload, topic } = useData();
+  var [data, setData] = useState([50, 51, 49, 51, 51]);
+  var humid = [50, 51, 49, 51, 51];
+  const [h, setH] = useState();
   //data.shift();
   //data.push(6);
   /*useEffect(() => {
@@ -28,11 +28,12 @@ function HumidScreen() {
       setData(temp);
     }
   }, [payload, topic]);*/
-  const feeds = ['thienkun/feeds/onoff', 'thienkun/feeds/test', 'thienkun/feeds/humid', 'thienkun/feeds/temp'];
+  const feeds = ['thienkun/feeds/onoff', 'thienkun/feeds/test', 'thienkun/feeds/humid', 'thienkun/feeds/temp', 'tentoila24/feeds/humid'];
     //const topic = feeds[1];
     
     const password = //'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
-    'aio_MRjJ42fgnx14P2x4aAIy6OuylnNQ';
+    //'aio_MRjJ42fgnx14P2x4aAIy6OuylnNQ';
+    'aio_usWu17O0FXcVE3lAletS2mcJS1I1';
     //const uri = 'mqtts://#thienkun:#aio_VwGf00hR9EfUZuJVX8yvnIwuGEf2@io.adafruit.com';
     const mqttHost = 'io.adafruit.com';
     
@@ -45,7 +46,7 @@ function HumidScreen() {
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
         // connect the client
-        client.connect({onSuccess:subscribe, onFailure: check, useSSL: true, userName: 'thienkun', password: password, keepAliveInterval: 1000 });
+        client.connect({onSuccess:subscribe, onFailure: check, useSSL: true, userName: 'tentoila24', password: password, keepAliveInterval: 1000 });
     }
     function check() 
     {
@@ -54,10 +55,7 @@ function HumidScreen() {
     
     function subscribe()
     {
-        client.subscribe(feeds[0]);
-        client.subscribe(feeds[1]);
-        client.subscribe(feeds[2]);
-        client.subscribe(feeds[3]);
+        client.subscribe(feeds[4]);
     }
     
     // called when the client connects
@@ -92,20 +90,19 @@ function HumidScreen() {
         console.log("onMessageArrived:" + message.payloadString);
         //setTopic(message.topic);
         //setPayload(message.payloadString);
-        if (message.topic == feeds[2])
+        if (message.topic == feeds[4])
         {
-          if (temp.length == 5)
+          if (humid.length == 5)
           {
-            temp.shift();
+            humid.shift();
           }
-          temp.push(parseInt(message.payloadString));
-          t
-          setData(temp);
-          setT(parseInt(message.payloadString))
+          humid.push(parseInt(message.payloadString));
+          setData(humid);
+          setH(parseInt(message.payloadString))
         }
         
     }
-  // function refresh_data() {};
+  //function refresh_data() {}
   mqtt();
   const width = Dimensions.get("screen").width * 0.8;
   return(
@@ -144,7 +141,7 @@ function HumidScreen() {
       />
       {/* <Button title="Refresh" onPress={refresh_data} />  */}
       <Text style={{alignSelf: 'center'}}> Humid </Text>
-      <Text style={{margin: '20%'}}>{t}</Text>
+      {/* <Text style={{margin: '20%'}}>{t}</Text> */}
   </View>
   )
 }

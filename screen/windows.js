@@ -17,10 +17,10 @@ init({
 });
 
 //MQTT
-const feeds = ['tentoila24/feeds/window-status'];
+const feeds = ['tentoila24/feeds/dooropen'];
 const topic = feeds[0];
 
-const password = 'aio_pClT87yWsrJnd3xm44PMuFeinhew';
+const password = 'aio_usWu17O0FXcVE3lAletS2mcJS1I1';
 // 'aio_EVNi18eQsuWTkmrRxnPTKC8ZV5KJ';
 const mqttHost = 'io.adafruit.com';
 var client;
@@ -89,7 +89,7 @@ function click()
               isActive: false,
               Current_Status: "Off"
             })
-            onConnect('ON')
+            onConnect(1)
           }
           if (docSnap.data().isActive == false)
           {
@@ -97,7 +97,7 @@ function click()
               isActive: true,
               Current_Status: "On"
             })
-            onConnect("OFF")
+            onConnect(0)
           }
         }
       })
@@ -116,8 +116,8 @@ class Windows extends Component{
             <Image style ={{width: 50, height: 50, top: '5%', left: '-2%'}} source={require('../ICON/arrow.png')}/>
             <Text style = {styles.text}>Menu</Text>
             <TouchableOpacity onPress={() => {click();}}>
-              <Image style ={{width: '70%', height: '70%', alignSelf: 'center', top: '10%'}} source={require('../ICON/onoff.png')}/>
-            </TouchableOpacity>
+            <Image style ={{width: '70%', height: '70%', alignSelf: 'center', top: '10%'}} source={require('../ICON/onoff.png')} resizeMode='contain'/>
+          </TouchableOpacity>
 
         </View>
         <View style = {styles.navContainer}>
